@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scxml 
+	datamodel="ecmascript"
+    initial="rest"
+    name="slider"
+    version="1.0"
+    xmlns:dbvis="dbvis"
+    xmlns="http://www.w3.org/2005/07/scxml">
+	
+	<datamodel>
+		<data id="value1" expr="0"/>
+		<data id="value2" expr="0"/>
+		<data id="min" expr="0"/>
+		<data id="max" expr="0"/>
+	</datamodel>
+	
+	<state id="rest">
+		<transition event="hoverH" target="hovering-handle" />
+		<transition event="hoverB" target="hovering-bar" />
+	</state>
+	
+	<state id="hovering-handle">
+		<transition event="stop" target="rest" />
+		<transition event="hoverB" target="hovering-bar" />
+		<transition event="click" target="min" cond="value1=min" />
+		<transition event="click" target="max" cond="value2=max" />
+		<transition event="click" target="wait" />
+	</state>
+	
+	<state id="hovering-bar">
+		<transition event="stop" target="rest" />
+		<transition event="hoverH" target="hovering-handle" />
+		<transition event="click" target="min" cond="value1=min" />
+		<transition event="click" target="max" cond="value2=max" />
+		<transition event="click" target="wait" />
+	</state>
+	
+	<state id="wait">
+		<transition event="dragL" target="moving-left" />
+		<transition event="dragR" target="moving-right" />
+		<transition event="release" target="hovering-handle" />
+	</state>
+	
+	<state id="moving-left">
+		<transition event="stopDrag" target="wait" />
+		<transition event="dragL" target="min" cond="value1=min" />
+		<transition event="dragR" target="moving-right" />
+	</state>
+	
+	<state id="moving-right">
+		<transition event="stopDrag" target="wait" />
+		<transition event="dragR" target="max" cond="value2=max" />
+		<transition event="dragL" target="moving-left" />
+	</state>
+	
+	<state id="min">
+		<transition event="dragR" target="moving-right" />
+		<transition event="release" target="hovering-handle" />
+	</state>
+	
+	<state id="max">
+		<transition event="dragL" target="moving-left" />
+		<transition event="release" target="hovering-handle" />
+	</state>
+	
+</scxml>

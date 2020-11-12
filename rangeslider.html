@@ -20,8 +20,7 @@
 />
 
 <h2>Range</h2>
-<div class="row align-items-center">
-	<div class="col-sm-2"><p id="value-range"></p></div>
+<div class="row align-items-center">>
 	<div class="col-sm"><div id="slider-range"></div></div>
 </div>
 
@@ -43,10 +42,7 @@
 		.width(300)
 		.ticks(0)
 		.default([20, 80])
-		.fill('#2196f3')
-		.on('onchange', val => {
-			d3.select('p#value-range').text(val.map(d3.format('s')).join('-'));
-		});
+		.fill('#2196f3');
 
 	var gRange = d3
 		.select('div#slider-range')
@@ -58,12 +54,6 @@
 
 	gRange.call(sliderRange);
 
-	d3.select('p#value-range').text(
-		sliderRange
-		.value()
-		.map(d3.format(''))
-		.join('-')
-	);
 	//----------------------------------------------|*/
 	
 	const listeners = {
@@ -82,16 +72,16 @@
     };
 	
 	function dataModelToSlider(dm, slider) {
-        sliderRange.min = slider.min;
-		sliderRange.max = slider.max;
+        sliderRange.min(slider.min);
+		sliderRange.max(slider.max);
 		sliderRange.value()[0] = slider.value1;
 		sliderRange.value()[1] = slider.value2;
     }
 	  
 	function sliderToDataModel(slider) {
         return {
-            min: sliderRange.min,
-            max: sliderRange.max,
+            min: sliderRange.min(),
+            max: sliderRange.max(),
             value1: sliderRange.value()[0], 
 			value2: sliderRange.value()[1]
         };
@@ -109,7 +99,31 @@
 					}
 				);
 				sc.registerListener(listeners);
-				
+				//ADD HERE EVENT LISTENERS
+				sliderRange.on('onchange', function(){
+						if ( sliderRange.value()[0] > value1 ){
+							sc.gen('dragR');
+							value1 = sliderRange.value()[0];
+							console.log("Generated dragR event");
+						}
+						else if ( sliderRange.value()[1] > value2 ){
+							sc.gen('dragR');
+							value2 = sliderRange.value()[1];
+							console.log("Generated dragR event");
+						}
+						else if ( sliderRange.value()[0] < value1 ){
+							sc.gen('dragL');
+							value1 = sliderRange.value()[0];
+							console.log("Generated dragL event");
+						}
+						else if ( sliderRange.value()[1] < value2 ){
+							sc.gen('dragL');
+							value2 = sliderRange.value()[1];
+							console.log("Generated dragL event");
+						}
+					}
+				)
+				//------------------------
 				sc.start();
 				console.log(sc.getSnapshot());
 				console.log(sc.getConfiguration());

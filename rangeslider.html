@@ -102,24 +102,40 @@
 				//ADD HERE EVENT LISTENERS
 				sliderRange.on('onchange', function(){
 						if ( sliderRange.value()[0] > value1 ){
-							sc.gen('dragR');
 							value1 = sliderRange.value()[0];
-							console.log("Generated dragR event");
+							sc.gen('dragR', [0, value1] );
+							//console.log("Generated dragR event on left handle");
+							/*if ( sc.isIn("min") || sc.isIn("max") ){
+								console.log(sc.getSnapshot());
+								console.log(sc.getConfiguration());
+							}*/
 						}
 						else if ( sliderRange.value()[1] > value2 ){
-							sc.gen('dragR');
 							value2 = sliderRange.value()[1];
-							console.log("Generated dragR event");
+							sc.gen('dragR', [1, value2] );
+							//console.log("Generated dragR event on right handle");
+							/*if ( sc.isIn("min") || sc.isIn("max") ){
+								console.log(sc.getSnapshot());
+								console.log(sc.getConfiguration());
+							}*/
 						}
 						else if ( sliderRange.value()[0] < value1 ){
-							sc.gen('dragL');
-							value1 = sliderRange.value()[0];
-							console.log("Generated dragL event");
+							value1 = sliderRange.value()[0];						
+							sc.gen('dragL', [0, value1] );
+							//console.log("Generated dragL event on left handle");
+							/*if ( sc.isIn("min") || sc.isIn("max") ){
+								console.log(sc.getSnapshot());
+								console.log(sc.getConfiguration());
+							}*/
 						}
 						else if ( sliderRange.value()[1] < value2 ){
-							sc.gen('dragL');
-							value2 = sliderRange.value()[1];
-							console.log("Generated dragL event");
+							value2 = sliderRange.value()[1];						
+							sc.gen('dragL', [1, value2] );
+							//console.log("Generated dragL event on right handle");
+							/*if ( sc.isIn("min") || sc.isIn("max") ){
+								console.log(sc.getSnapshot());
+								console.log(sc.getConfiguration());
+							}*/
 						}
 					}
 				)
@@ -127,6 +143,10 @@
 				sc.start();
 				console.log(sc.getSnapshot());
 				console.log(sc.getConfiguration());
+				//--------TEST------------
+				sc.gen('hoverH');
+				sc.gen('click');
+				//------------------------
 			});
 		});		
 	}

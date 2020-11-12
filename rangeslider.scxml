@@ -22,16 +22,16 @@
 	<state id="hovering-handle">
 		<transition event="stop" target="rest" />
 		<transition event="hoverB" target="hovering-bar" />
-		<transition event="click" target="min" cond="value1=min" />
-		<transition event="click" target="max" cond="value2=max" />
+		<transition event="click" target="min" cond="value1==min" />
+		<transition event="click" target="max" cond="value2==max"/>
 		<transition event="click" target="wait" />
 	</state>
 	
 	<state id="hovering-bar">
 		<transition event="stop" target="rest" />
 		<transition event="hoverH" target="hovering-handle" />
-		<transition event="click" target="min" cond="value1=min" />
-		<transition event="click" target="max" cond="value2=max" />
+		<transition event="click" target="min" cond="value1==min" />
+		<transition event="click" target="max" cond="value2==max" />
 		<transition event="click" target="wait" />
 	</state>
 	
@@ -42,14 +42,30 @@
 	</state>
 	
 	<state id="moving-left">
+		<onentry>
+			<if cond="_event.data[0]==0">
+				<assign location="value1" expr="_event.data[1]"/>
+			<else/>
+				<assign location="value2" expr="_event.data[1]"/>
+			</if>
+		</onentry>
 		<transition event="stopDrag" target="wait" />
-		<transition event="dragL" target="min" cond="value1=min" />
+		<transition target="min" cond="value1==min" />
 		<transition event="dragR" target="moving-right" />
+		<transition event="dragL" target="moving-left"/>
 	</state>
 	
 	<state id="moving-right">
+		<onentry>
+			<if cond="_event.data[0]==0">
+				<assign location="value1" expr="_event.data[1]"/>
+			<else/>
+				<assign location="value2" expr="_event.data[1]"/>
+			</if>
+		</onentry>
 		<transition event="stopDrag" target="wait" />
-		<transition event="dragR" target="max" cond="value2=max" />
+		<transition target="max" cond="value2==max" />
+		<transition event="dragR" target="moving-right"/>
 		<transition event="dragL" target="moving-left" />
 	</state>
 	

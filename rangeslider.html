@@ -105,40 +105,41 @@
 							value1 = sliderRange.value()[0];
 							sc.gen('dragR', [0, value1] );
 							//console.log("Generated dragR event on left handle");
-							/*if ( sc.isIn("min") || sc.isIn("max") ){
+							if ( sc.isIn("min") || sc.isIn("max") ){
 								console.log(sc.getSnapshot());
 								console.log(sc.getConfiguration());
-							}*/
+							}
 						}
 						else if ( sliderRange.value()[1] > value2 ){
 							value2 = sliderRange.value()[1];
 							sc.gen('dragR', [1, value2] );
 							//console.log("Generated dragR event on right handle");
-							/*if ( sc.isIn("min") || sc.isIn("max") ){
+							if ( sc.isIn("min") || sc.isIn("max") ){
 								console.log(sc.getSnapshot());
 								console.log(sc.getConfiguration());
-							}*/
+							}
 						}
 						else if ( sliderRange.value()[0] < value1 ){
 							value1 = sliderRange.value()[0];						
 							sc.gen('dragL', [0, value1] );
 							//console.log("Generated dragL event on left handle");
-							/*if ( sc.isIn("min") || sc.isIn("max") ){
+							if ( sc.isIn("min") || sc.isIn("max") ){
 								console.log(sc.getSnapshot());
 								console.log(sc.getConfiguration());
-							}*/
+							}
 						}
 						else if ( sliderRange.value()[1] < value2 ){
 							value2 = sliderRange.value()[1];						
 							sc.gen('dragL', [1, value2] );
 							//console.log("Generated dragL event on right handle");
-							/*if ( sc.isIn("min") || sc.isIn("max") ){
+							if ( sc.isIn("min") || sc.isIn("max") ){
 								console.log(sc.getSnapshot());
 								console.log(sc.getConfiguration());
-							}*/
+							}
 						}
 					}
 				)
+				// oggetto.on('mouseover'), make it return d3.this to have the html node of the object
 				//------------------------
 				sc.start();
 				console.log(sc.getSnapshot());

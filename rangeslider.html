@@ -53,12 +53,12 @@
 		.attr('transform', 'translate(30,30)');
 
 	gRange.call(sliderRange);
-
+	
 	//----------------------------------------------|*/
 	
 	const listeners = {
-        onEntry: function(stateId) { console.log('entering state ' + stateId); },
-        onExit: function(stateId) { console.log('exiting state ' + stateId); },
+        //onEntry: function(stateId) { console.log('entering state ' + stateId); },
+        //onExit: function(stateId) { console.log('exiting state ' + stateId); },
         onTransition: function(sourceStateId, targetIds) {
             if (targetIds && targetIds.length) {
                 console.log('transitioning from ' + sourceStateId + ' to ' + targetIds.join(','));
@@ -138,9 +138,37 @@
 							}
 						}
 					}
-				)
-				// oggetto.on('mouseover'), make it return d3.this to have the html node of the object
-				//------------------------
+				);
+				
+				//Changing ID to the handles, so that we can easily add listeners to them
+				d3.select("path.handle").attr("id", "h1");
+				//d3.select("path#h1").attr("fill", "blue");
+				d3.selectAll("path.handle").filter(function(){return d3.select(this).attr("id")!="h1";}).attr("id", "h2");
+				//d3.select("path#h2").attr("fill", "green");
+				//-----------------------------------------------------------------------
+				
+				//---------------- MOUSEENTER listeners -------------
+				d3.select("path#h1").on('mouseenter', function(){
+						d3.select(this).attr("fill", "orange");
+					}
+				);
+				d3.select("path#h2").on('mouseenter', function(){
+						d3.select(this).attr("fill", "red");
+					}
+				);
+				//---------------------------------------------------
+				
+				//---------------- MOUSELEAVE listeners -------------
+				d3.select("path#h1").on('mouseleave', function(){
+						d3.select(this).attr("fill", "white");
+					}
+				);
+				d3.select("path#h2").on('mouseleave', function(){
+						d3.select(this).attr("fill", "white");
+					}
+				);
+				//---------------------------------------------------
+				
 				sc.start();
 				console.log(sc.getSnapshot());
 				console.log(sc.getConfiguration());

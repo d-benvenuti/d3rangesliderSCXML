@@ -176,7 +176,7 @@
 				);
 				//---------------------------------------------------
 				//---------------- MOUSEUP listeners ----------------
-				d3.select("path#h1").on('mouseup', function(){
+				d3.select("path#h1").on('pointerup', function(){
 						d3.select(this).attr("fill", "black");
 						//recover normal behaviour for mouseover events
 						d3.select(this).on('mouseenter', function(){
@@ -189,7 +189,7 @@
 						);
 					}
 				);
-				d3.select("path#h2").on('mouseup', function(){
+				d3.select("path#h2").on('pointerup', function(){
 						d3.select(this).attr("fill", "black");
 						//recover normal behaviour for mouseover events
 						d3.select(this).on('mouseenter', function(){

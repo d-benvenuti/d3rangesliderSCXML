@@ -28,12 +28,10 @@
 	<img src="simple-range-slider-model.png" style="width: 50vw;">
 </div>
 
-<script>
-	
-	/*|------------ CREATING THE SLIDER -------------|
-	|----------------------------------------------|*/
-	var data = [0,100];
-	 
+<script>	
+	//|------------ CREATING THE SLIDER -------------|
+	//|----------------------------------------------|
+	var data = [0,100]; 
 	// Range
 	var sliderRange = d3
 		.sliderBottom()
@@ -43,7 +41,6 @@
 		.ticks(0)
 		.default([20, 80])
 		.fill('#2196f3');
-
 	var gRange = d3
 		.select('div#slider-range')
 		.append('svg')
@@ -51,11 +48,8 @@
 		.attr('height', 100)
 		.append('g')
 		.attr('transform', 'translate(30,30)');
-
 	gRange.call(sliderRange);
-	
-	//----------------------------------------------|*/
-	
+	//----------------------------------------------	
 	const listeners = {
         //onEntry: function(stateId) { console.log('entering state ' + stateId); },
         //onExit: function(stateId) { console.log('exiting state ' + stateId); },
@@ -69,15 +63,13 @@
         onError: function(err) {
             console.log('ERROR:' + JSON.stringify(err));
         }
-    };
-	
+    };	
 	function dataModelToSlider(dm, slider) {
         sliderRange.min(slider.min);
 		sliderRange.max(slider.max);
 		sliderRange.value()[0] = slider.value1;
 		sliderRange.value()[1] = slider.value2;
-    }
-	  
+    }	  
 	function sliderToDataModel(slider) {
         return {
             min: sliderRange.min(),
@@ -85,8 +77,7 @@
             value1: sliderRange.value()[0], 
 			value2: sliderRange.value()[1]
         };
-    }
-	
+    }	
 	function main() {
 		window.scion.scxml.urlToModel('rangeslider.scxml', function( err, modelFactoryFactory){
 			if (err)	throw err;
@@ -100,6 +91,8 @@
 				);
 				sc.registerListener(listeners);
 				//ADD HERE EVENT LISTENERS
+				//---------------- onchange listeners ---------------
+				//(might change this one into 'ondrag' and 'onstop' on the handles)
 				sliderRange.on('onchange', function(){
 						if ( sliderRange.value()[0] > value1 ){
 							value1 = sliderRange.value()[0];
@@ -139,14 +132,11 @@
 						}
 					}
 				);
-				
+				//-----------------------------------------------------------------------
 				//Changing ID to the handles, so that we can easily add listeners to them
 				d3.select("path.handle").attr("id", "h1");
-				//d3.select("path#h1").attr("fill", "blue");
 				d3.selectAll("path.handle").filter(function(){return d3.select(this).attr("id")!="h1";}).attr("id", "h2");
-				//d3.select("path#h2").attr("fill", "green");
-				//-----------------------------------------------------------------------
-				
+				//-----------------------------------------------------------------------				
 				//---------------- MOUSEENTER listeners -------------
 				d3.select("path#h1").on('mouseenter', function(){
 						d3.select(this).attr("fill", "orange");
@@ -156,8 +146,7 @@
 						d3.select(this).attr("fill", "red");
 					}
 				);
-				//---------------------------------------------------
-				
+				//---------------------------------------------------				
 				//---------------- MOUSELEAVE listeners -------------
 				d3.select("path#h1").on('mouseleave', function(){
 						d3.select(this).attr("fill", "white");
@@ -168,7 +157,52 @@
 					}
 				);
 				//---------------------------------------------------
-				
+				//---------------- MOUSEDOWN listeners --------------
+				d3.select("path#h1").on('mousedown', function(e){
+						d3.select(this).attr("fill", "blue");
+						e.preventDefault();
+						//ignore mouseover events while dragging
+						d3.select(this).on('mouseenter', function(){});
+						d3.select(this).on('mouseleave', function(){});
+					}
+				);
+				d3.select("path#h2").on('mousedown', function(e){
+						d3.select(this).attr("fill", "blue");
+						e.preventDefault();
+						//ignore mouseover events while dragging
+						d3.select(this).on('mouseenter', function(){});
+						d3.select(this).on('mouseleave', function(){});
+					}
+				);
+				//---------------------------------------------------
+				//---------------- MOUSEUP listeners ----------------
+				d3.select("path#h1").on('mouseup', function(){
+						d3.select(this).attr("fill", "black");
+						//recover normal behaviour for mouseover events
+						d3.select(this).on('mouseenter', function(){
+								d3.select(this).attr("fill", "orange");
+							}
+						);
+						d3.select(this).on('mouseleave', function(){
+								d3.select(this).attr("fill", "white");
+							}
+						);
+					}
+				);
+				d3.select("path#h2").on('mouseup', function(){
+						d3.select(this).attr("fill", "black");
+						//recover normal behaviour for mouseover events
+						d3.select(this).on('mouseenter', function(){
+								d3.select(this).attr("fill", "red");
+							}
+						);
+						d3.select(this).on('mouseleave', function(){
+								d3.select(this).attr("fill", "white");
+							}
+						);
+					}
+				);
+				//---------------------------------------------------
 				sc.start();
 				console.log(sc.getSnapshot());
 				console.log(sc.getConfiguration());

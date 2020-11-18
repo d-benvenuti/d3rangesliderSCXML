@@ -21,6 +21,9 @@
 	</state>
 	
 	<state id="hovering-handle">
+		<onentry>
+			<assign location="handle" expr="_event.data[0]"/>
+		</onentry>
 		<transition event="stop" target="rest"/>
 		<transition event="hoverB" target="hovering-bar"/>
 		<transition event="click" target="min" cond="value1==min"/>
@@ -37,6 +40,9 @@
 	</state>
 	
 	<state id="wait">
+		<onentry>
+			<assign location="handle" expr="_event.data[0]"/>
+		</onentry>
 		<transition event="dragL" target="moving-left"/>
 		<transition event="dragR" target="moving-right"/>
 		<transition event="release" target="hovering-handle"/>
@@ -51,7 +57,7 @@
 				<assign location="value2" expr="_event.data[1]"/>
 			</if>
 		</onentry>
-		<transition event="stopDrag" target="wait"/>
+		<transition event="stopDrag" target="rest"/>
 		<transition target="check-min" cond="value1==min"/>
 		<transition event="dragR" target="moving-right"/>
 		<transition event="dragL" target="moving-left"/>
@@ -62,7 +68,7 @@
 			<assign location="handle" expr="1"/>
 			<assign location="value2" expr="_event.data[1]"/>
 		</onentry>
-		<transition event="stopDrag" target="wait"/>
+		<transition event="stopDrag" target="rest"/>
 		<transition target="min" cond="value2==min"/>
 		<transition event="dragR" target="moving-right"/>
 		<transition event="dragL" target="moving-left"/>
@@ -77,7 +83,7 @@
 				<assign location="value2" expr="_event.data[1]"/>
 			</if>
 		</onentry>
-		<transition event="stopDrag" target="wait"/>
+		<transition event="stopDrag" target="rest"/>
 		<transition target="check-max" cond="value2==max"/>
 		<transition event="dragR" target="moving-right"/>
 		<transition event="dragL" target="moving-left"/>
@@ -88,7 +94,7 @@
 			<assign location="handle" expr="0"/>
 			<assign location="value1" expr="_event.data[1]"/>
 		</onentry>
-		<transition event="stopDrag" target="wait"/>
+		<transition event="stopDrag" target="rest"/>
 		<transition target="max" cond="value1==max"/>
 		<transition event="dragR" target="moving-right"/>
 		<transition event="dragL" target="moving-left"/>
@@ -106,12 +112,12 @@
 	
 	<state id="min">
 		<transition event="dragR" target="moving-right"/>
-		<transition event="release" target="hovering-handle"/>
+		<transition event="stopDrag" target="rest"/>
 	</state>
 	
 	<state id="max">
 		<transition event="dragL" target="moving-left"/>
-		<transition event="release" target="hovering-handle"/>
+		<transition event="stopDrag" target="rest"/>
 	</state>
 	
 </scxml>

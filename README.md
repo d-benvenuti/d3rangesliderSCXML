@@ -13,4 +13,5 @@ Open the console and see the state transitions as they happen.
 
 # Issues
 
-After reaching MAX or MIN really fast, the handle does not return to the normal hovering behaviour until it is not dragged again.
+-	After reaching MAX or MIN really fast, the handle does not return to the normal hovering behaviour until it is not dragged again.
+-	The hovering of the bar is not yet implemented.

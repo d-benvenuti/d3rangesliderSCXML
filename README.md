@@ -13,4 +13,4 @@ Open the console and see the state transitions as they happen.
 
 # Issues
 
-After reaching state "max" while dragging the right handle, if you leave it there, remember to perform a dragL on the left slider to make the statechart working correctly (the opposite goes for the "min" state while dragging the left handle).
+After reaching MAX or MIN really fast, the handle does not return to the normal hovering behaviour until it is not dragged again.

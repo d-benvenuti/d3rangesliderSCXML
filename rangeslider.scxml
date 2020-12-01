@@ -117,11 +117,13 @@
 	<state id="min">
 		<transition event="dragR" target="moving-right"/>
 		<transition event="stopDrag" target="rest"/>
+		<transition event="hoverH" target="hovering-handle"/>
 	</state>
 	
 	<state id="max">
 		<transition event="dragL" target="moving-left"/>
 		<transition event="stopDrag" target="rest"/>
+		<transition event="hoverH" target="hovering-handle"/>
 	</state>
 	
 </scxml>

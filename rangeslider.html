@@ -145,16 +145,21 @@
 				//-----------------------------------------------------------------------				
 				//---------------- MOUSEENTER listeners -------------
 				d3.select("path#h1").on('mouseenter', function(){
+						//remember that the user is hovering on left handle
+						hovering = 1;
 						d3.select(this).attr("fill", "orange");
-						sc.gen('hoverH', [0]);
+						//if the user is not dragging generate the event
+						if (dragging == 0)	sc.gen('hoverH', [0]);
 						//logging
 						console.log(sc.getSnapshot());
 						console.log(sc.getConfiguration());
 					}
 				);
 				d3.select("path#h2").on('mouseenter', function(){
+						//remember that the user is hovering on right handle
+						hovering = 2;
 						d3.select(this).attr("fill", "red");
-						sc.gen('hoverH', [1]);
+						if (dragging == 0)	sc.gen('hoverH', [1]);
 						//logging
 						console.log(sc.getSnapshot());
 						console.log(sc.getConfiguration());
@@ -163,13 +168,19 @@
 				//---------------------------------------------------				
 				//---------------- MOUSELEAVE listeners -------------
 				d3.select("path#h1").on('mouseleave', function(){
+						//remember that the user is no longer hovering on left handle
+						hovering = 0;
 						d3.select(this).attr("fill", "white");
-						sc.gen('stop');
+						//if the user is not dragging generate the event
+						if (dragging == 0)	sc.gen('stop');
 					}
 				);
 				d3.select("path#h2").on('mouseleave', function(){
+						//remember that the user is no longer hovering on right handle
+						hovering = 0;
 						d3.select(this).attr("fill", "white");
-						sc.gen('stop');
+						//if the user is not dragging generate the event
+						if (dragging == 0)	sc.gen('stop');
 					}
 				);
 				//---------------------------------------------------
@@ -177,6 +188,7 @@
 				d3.select("path#h1").on('mousedown', function(e){
 						d3.select(this).attr("fill", "blue");
 						e.preventDefault();
+						//remember that the user is dragging
 						dragging = 1;
 						/*ignore mouseover events while dragging
 						d3.select(this).on('mouseenter', function(){});
@@ -191,9 +203,11 @@
 				d3.select("path#h2").on('mousedown', function(e){
 						d3.select(this).attr("fill", "blue");
 						e.preventDefault();
-						//ignore mouseover events while dragging
+						//remember that the user is dragging
+						dragging = 1;
+						/*ignore mouseover events while dragging
 						d3.select(this).on('mouseenter', function(){});
-						d3.select(this).on('mouseleave', function(){});
+						d3.select(this).on('mouseleave', function(){});*/
 						//generate event
 						sc.gen('click', [1]);
 						//logging
@@ -205,6 +219,7 @@
 				//---------------- POINTERUP listeners --------------
 				d3.select("path#h1").on('pointerup', function(){
 						d3.select(this).attr("fill", "black");
+						//remember that the user is no longer dragging
 						dragging = 0;
 						/*recover normal behaviour for mouseover events
 						d3.select(this).on('mouseenter', function(){
@@ -214,22 +229,28 @@
 								console.log(sc.getSnapshot());
 								console.log(sc.getConfiguration());
 							}
-						);*/
+						);
 						d3.select(this).on('mouseleave', function(){
 								d3.select(this).attr("fill", "white");
 								sc.gen('stop');
 							}
-						);
-						//generate events
-						if (hovering = 0)	sc.gen('stopDrag', [0]);
+						);*/
+						//generate events, STOPDRAG if the user 
+						//is no longer hovering on the handle
+						//HOVERH otherwise
+						if (hovering == 1)	sc.gen('hoverH', [0]);	
+						else	if (hovering == 0)	sc.gen('stopDrag', [0]);
 						//logging
 						console.log(sc.getSnapshot());
 						console.log(sc.getConfiguration());
+						console.log(hovering);
 					}
 				);
 				d3.select("path#h2").on('pointerup', function(){
 						d3.select(this).attr("fill", "black");
-						//recover normal behaviour for mouseover events
+						//remember that the user is no longer dragging
+						dragging = 0;
+						/*recover normal behaviour for mouseover events
 						d3.select(this).on('mouseenter', function(){
 								d3.select(this).attr("fill", "red");
 								sc.gen('hoverH', [1]);
@@ -242,12 +263,14 @@
 								d3.select(this).attr("fill", "white");
 								sc.gen('stop');
 							}
-						);
+						);*/
 						//generate event
-						sc.gen('stopDrag', [1]);
+						if (hovering == 2)	sc.gen('hoverH', [1]);
+						else if (hovering == 0)	sc.gen('stopDrag', [1]);
 						//logging
 						console.log(sc.getSnapshot());
 						console.log(sc.getConfiguration());
+						console.log(hovering);
 					}
 				);
 				//---------------------------------------------------

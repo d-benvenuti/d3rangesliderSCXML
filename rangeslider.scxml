@@ -57,11 +57,11 @@
 				<assign location="value2" expr="_event.data[1]"/>
 			</if>
 		</onentry>
+		<transition event="hoverH" target="hovering-handle"/>
 		<transition event="stopDrag" target="rest"/>
 		<transition target="check-min" cond="value1==min"/>
 		<transition event="dragR" target="moving-right"/>
 		<transition event="dragL" target="moving-left"/>
-		<transition event="hoverH" target="hovering-handle"/>
 	</state>
 	
 	<state id="moving-left-LHmin">
@@ -69,11 +69,11 @@
 			<assign location="handle" expr="1"/>
 			<assign location="value2" expr="_event.data[1]"/>
 		</onentry>
+		<transition event="hoverH" target="hovering-handle"/>
 		<transition event="stopDrag" target="rest"/>
 		<transition target="min" cond="value2==min"/>
 		<transition event="dragR" target="moving-right"/>
 		<transition event="dragL" target="moving-left"/>
-		<transition event="hoverH" target="hovering-handle"/>
 	</state>
 	
 	<state id="moving-right">
@@ -85,11 +85,11 @@
 				<assign location="value2" expr="_event.data[1]"/>
 			</if>
 		</onentry>
+		<transition event="hoverH" target="hovering-handle"/>
 		<transition event="stopDrag" target="rest"/>
 		<transition target="check-max" cond="value2==max"/>
 		<transition event="dragR" target="moving-right"/>
 		<transition event="dragL" target="moving-left"/>
-		<transition event="hoverH" target="hovering-handle"/>
 	</state>
 	
 	<state id="moving-right-RHmax">
@@ -97,11 +97,11 @@
 			<assign location="handle" expr="0"/>
 			<assign location="value1" expr="_event.data[1]"/>
 		</onentry>
+		<transition event="hoverH" target="hovering-handle"/>
 		<transition event="stopDrag" target="rest"/>
 		<transition target="max" cond="value1==max"/>
 		<transition event="dragR" target="moving-right"/>
 		<transition event="dragL" target="moving-left"/>
-		<transition event="hoverH" target="hovering-handle"/>
 	</state>
 	
 	<state id="check-max">

@@ -14,5 +14,5 @@ Open the console and see the state transitions as they happen.
 # Issues
 
 -	The selection is not yet draggable.
--	The hovering of the bar is not yet implemented.
--	The statechart image is not updated.
+-	The hovering of the bar is not yet working. The DOM elements related to the bar have been found, but "mouseenter" does not work on them.
+

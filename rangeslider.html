@@ -142,8 +142,11 @@
 				//Changing ID to the handles, so that we can easily add listeners to them
 				d3.select("path.handle").attr("id", "h1");
 				d3.selectAll("path.handle").filter(function(){return d3.select(this).attr("id")!="h1";}).attr("id", "h2");
-				//-----------------------------------------------------------------------				
+				//-----------------------------------------------------------------------			
 				//---------------- MOUSEENTER listeners -------------
+				//---------------------------------------------------
+				//---------------- FOR HANDLES ----------------------
+				//---------------------------------------------------
 				d3.select("path#h1").on('mouseenter', function(){
 						//remember that the user is hovering on left handle
 						hovering = 1;
@@ -163,6 +166,24 @@
 						//logging
 						console.log(sc.getSnapshot());
 						console.log(sc.getConfiguration());
+					}
+				);
+				//---------------- FOR not selected BAR -------------
+				//---------------------------------------------------
+				d3.select(".track").attr("id", "linea");
+				d3.select(".track-inset").attr("id", "ripieno");
+				d3.select(".track-fill").attr("id", "selezione");
+				
+				d3.select("linea").on('mouseenter', function(){
+						d3.select(this).attr("stroke", "#dc3545");
+					}
+				);
+				d3.select("ripieno").on('mouseenter', function(){
+						d3.select(this).attr("stroke", "#dc3545");
+					}
+				);
+				d3.select("selezione").on('mouseenter', function(){
+						d3.select(this).attr("stroke", "#dc3545");
 					}
 				);
 				//---------------------------------------------------				

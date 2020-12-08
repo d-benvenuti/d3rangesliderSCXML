@@ -142,6 +142,12 @@
 				//Changing ID to the handles, so that we can easily add listeners to them
 				d3.select("path.handle").attr("id", "h1");
 				d3.selectAll("path.handle").filter(function(){return d3.select(this).attr("id")!="h1";}).attr("id", "h2");
+				//-----------------------------------------------------------------------
+				//Changing ID to the track-inset, so that we can easily add listeners to it
+				d3.select(".track-inset").attr("id", "bar-filling");
+				//-----------------------------------------------------------------------
+				//Remove track-overlay since it is causing troubles
+				d3.select(".track-overlay").remove();
 				//-----------------------------------------------------------------------			
 				//---------------- MOUSEENTER listeners -------------
 				//---------------------------------------------------
@@ -168,22 +174,15 @@
 						console.log(sc.getConfiguration());
 					}
 				);
-				//---------------- FOR not selected BAR -------------
+				//---------------- For not selected BAR -------------
 				//---------------------------------------------------
-				d3.select(".track").attr("id", "linea");
-				d3.select(".track-inset").attr("id", "ripieno");
-				d3.select(".track-fill").attr("id", "selezione");
-				
-				d3.select("linea").on('mouseenter', function(){
+				d3.select("#bar-filling").on('mouseenter', function(){
 						d3.select(this).attr("stroke", "#dc3545");
-					}
-				);
-				d3.select("ripieno").on('mouseenter', function(){
-						d3.select(this).attr("stroke", "#dc3545");
-					}
-				);
-				d3.select("selezione").on('mouseenter', function(){
-						d3.select(this).attr("stroke", "#dc3545");
+						//generate event
+						sc.gen('hoverB');
+						//logging
+						console.log(sc.getSnapshot());
+						console.log(sc.getConfiguration());
 					}
 				);
 				//---------------------------------------------------				
@@ -212,6 +211,17 @@
 							console.log(sc.getSnapshot());
 							console.log(sc.getConfiguration());
 						};
+					}
+				);
+				//---------------- For not selected BAR -------------
+				//---------------------------------------------------
+				d3.select("#bar-filling").on('mouseleave', function(){
+						d3.select(this).attr("stroke", "#fff");
+						//generate event
+						sc.gen('stop');
+						//logging
+						console.log(sc.getSnapshot());
+						console.log(sc.getConfiguration());
 					}
 				);
 				//---------------------------------------------------
